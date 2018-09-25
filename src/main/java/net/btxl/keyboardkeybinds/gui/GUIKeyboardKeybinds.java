@@ -144,7 +144,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
         		else if (otherKeyBinds.contains(b))
         		{
         			List<String> text = new ArrayList<String>();
-    				text.add("---" + I18n.format(buttonKeyBindMap.get(b).getKeyDescription()) + "---");
+    				text.add("---" + buttonKeyBindMap.get(b).getKeyDescription() + "---");
     				text.add("Bound to " + buttonKeyBindMap.get(b).getDisplayName());
         			text.add("---Click to bind---");
         			drawHoveringText(text, mouseX, mouseY);

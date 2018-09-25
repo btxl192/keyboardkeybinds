@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.KeyBindingMap;
 import net.minecraftforge.client.settings.KeyModifier;
@@ -136,14 +137,14 @@ public class GUIKeyboardKeybinds extends GuiScreen
         		if (currentKeyBinds.contains(b))
         		{
         			List<String> text = new ArrayList<String>();
-    				text.add("---" + buttonKeyBindMap.get(b).getKeyDescription() + "---");
+    				text.add("---" + I18n.format(buttonKeyBindMap.get(b).getKeyDescription()) + "---");
         			text.add("---Click to unbind---");
         			drawHoveringText(text, mouseX, mouseY);
         		}
         		else if (otherKeyBinds.contains(b))
         		{
         			List<String> text = new ArrayList<String>();
-    				text.add("---" + buttonKeyBindMap.get(b).getKeyDescription() + "---");
+    				text.add("---" + I18n.format(buttonKeyBindMap.get(b).getKeyDescription()) + "---");
     				text.add("Bound to " + buttonKeyBindMap.get(b).getDisplayName());
         			text.add("---Click to bind---");
         			drawHoveringText(text, mouseX, mouseY);
@@ -162,11 +163,11 @@ public class GUIKeyboardKeybinds extends GuiScreen
         					String desc = "";
         					if (k.getKeyModifier() != KeyModifier.NONE)
         					{
-        						desc = "(" + k.getKeyModifier() + ") " + k.getKeyDescription();
+        						desc = "(" + k.getKeyModifier() + ") " + I18n.format(k.getKeyDescription());
         					}
         					else
         					{
-        						desc = k.getKeyDescription();
+        						desc = I18n.format(k.getKeyDescription());
         					}
         					text.add(desc);
         				}
@@ -311,16 +312,16 @@ public class GUIKeyboardKeybinds extends GuiScreen
 		buttonKeyBindMap.clear();
 		for (KeyBinding k : currentKeys)
 		{
-			addCurrentKBButton(20, 8, k.getKeyDescription());
+			addCurrentKBButton(20, 8, I18n.format(k.getKeyDescription()));
 			buttonKeyBindMap.put(buttonList.get(this.buttonList.size()-1), k);
 		}
 		
 		rowCount.put(10, 0);
 		for (KeyBinding k : keyBinds)
 		{    			
-			if (k.getKeyDescription().contains(searchBar.getText()) || searchBar.getText().trim() == "")
+			if (k.getKeyDescription().contains(searchBar.getText()) || searchBar.getText().trim() == "" || I18n.format(k.getKeyDescription()).contains(searchBar.getText()))
 			{
-				addOtherKBButton(20, 10, k.getKeyDescription());
+				addOtherKBButton(20, 10, I18n.format(k.getKeyDescription()));
 				buttonKeyBindMap.put(buttonList.get(this.buttonList.size()-1), k);
 				if (currentKeys.contains(k))
 				{
@@ -328,7 +329,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
 				}
 				if (k.getKeyCode() != 0)
 				{
-					buttonList.get(this.buttonList.size()-1).displayString = "§c" + buttonList.get(this.buttonList.size()-1).displayString;
+					buttonList.get(this.buttonList.size()-1).displayString = "*" + buttonList.get(this.buttonList.size()-1).displayString + "*";
 				}
 			}
 		

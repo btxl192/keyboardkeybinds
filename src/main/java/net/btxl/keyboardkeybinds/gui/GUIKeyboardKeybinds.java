@@ -71,16 +71,21 @@ public class GUIKeyboardKeybinds extends GuiScreen
 		return (float)this.height / 900f; 
 	}
 	
+	private float getWidthMult()
+	{
+		return (float)this.width / 600f;
+	}
+	
 	private Integer getButtonHeight()
 	{
-		Integer i = (int) (20 * getHeightMult());
+		Integer i = (int) (30 * getHeightMult());
 		if (i > 20)
 		{
 			return 20;
 		}
 		else
 		{
-			return 10;
+			return i;
 		}
 	}	
 	
@@ -107,8 +112,11 @@ public class GUIKeyboardKeybinds extends GuiScreen
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRenderer, "Keyboard Keybinds", this.width / 2, 15, 16777215);
-        this.drawString(this.fontRenderer, "Bound keys: ", 20, getRowY(7), 16777215);
-        this.drawString(this.fontRenderer, "Unbound keys: ", 20, getRowY(9), 16777215);
+        if (lastButton != null)
+        {
+            this.drawString(this.fontRenderer, "Bound keys: ", 20, getRowY(7), 16777215);
+            this.drawString(this.fontRenderer, "Unbound keys: ", 20, getRowY(9), 16777215);
+        }
         this.drawString(this.fontRenderer, "Key modifiers: ", 20, getRowY(11), 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
         Integer mousewheel = Integer.signum(Mouse.getDWheel()) * 20;
@@ -127,11 +135,15 @@ public class GUIKeyboardKeybinds extends GuiScreen
         		
         		if (currentKeyBinds.contains(b))
         		{
-        			drawHoveringText("---Click to unbind---", mouseX, mouseY);
+        			List<String> text = new ArrayList<String>();
+    				text.add("---" + buttonKeyBindMap.get(b).getKeyDescription() + "---");
+        			text.add("---Click to unbind---");
+        			drawHoveringText(text, mouseX, mouseY);
         		}
         		else if (otherKeyBinds.contains(b))
         		{
         			List<String> text = new ArrayList<String>();
+    				text.add("---" + buttonKeyBindMap.get(b).getKeyDescription() + "---");
     				text.add("Bound to " + buttonKeyBindMap.get(b).getDisplayName());
         			text.add("---Click to bind---");
         			drawHoveringText(text, mouseX, mouseY);
@@ -412,11 +424,12 @@ public class GUIKeyboardKeybinds extends GuiScreen
     {       	
     	try
     	{
+    		Integer width = getButtonWidth(buttonText);
     		if (rowLength.get(rowNum) == null)
     		{
     			rowLength.put(rowNum, 0);
     		}
-    		this.buttonList.add(new GUIControlButton(backButtonID + buttonList.size(), rowLength.get(rowNum) + offset + 2 * rowCount.get(rowNum), getRowY(rowNum), getButtonWidth(buttonText), getButtonHeight(), buttonText, key));
+    		this.buttonList.add(new GUIControlButton(backButtonID + buttonList.size(), rowLength.get(rowNum) + offset + rowCount.get(rowNum), getRowY(rowNum), width, getButtonHeight(), buttonText, key));
     		if (lastButton != null)
     		{			
     			if (key.equals(((GUIControlButton)lastButton).getKey()))
@@ -425,7 +438,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
     			}
     		}
     		rowCount.put(rowNum, rowCount.get(rowNum) + 1);
-    		rowLength.put(rowNum, rowLength.get(rowNum) + getButtonWidth(getLastButtonInList().displayString));
+    		rowLength.put(rowNum, rowLength.get(rowNum) + width);
     	}
     	catch (Exception e)
     	{
@@ -438,7 +451,8 @@ public class GUIKeyboardKeybinds extends GuiScreen
     {
     	try
     	{
-    		this.buttonList.add(new GUIControlButton(backButtonID + buttonList.size(), x, getRowY(rowNum), getButtonWidth(buttonText), getButtonHeight(), buttonText, key));
+    		Integer width = getButtonWidth(buttonText);
+    		this.buttonList.add(new GUIControlButton(backButtonID + buttonList.size(), x, getRowY(rowNum), width, getButtonHeight(), buttonText, key));
     		if (lastButton != null)
     		{   			
     			if (key.equals(((GUIControlButton)lastButton).getKey()))
@@ -451,7 +465,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
     	}
     	catch (Exception e)
     	{
-    		//System.out.println("trouble placing " + buttonText);
+    		System.out.println("trouble placing " + buttonText);
     	}
     	
 
@@ -470,9 +484,9 @@ public class GUIKeyboardKeybinds extends GuiScreen
     	}
     }
     
-    public static Integer getButtonWidth(String s)
+    public Integer getButtonWidth(String s)
     {
-    	return 20 + 5 * (s.length() - 1);
+    	return (int) ((20 + 5 * (s.length() - 1)) * getWidthMult());
     }
     
     @Override

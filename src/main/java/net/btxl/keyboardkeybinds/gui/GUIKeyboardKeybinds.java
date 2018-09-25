@@ -385,9 +385,16 @@ public class GUIKeyboardKeybinds extends GuiScreen
         	{
         		currentKBLength += getButtonWidth(buttonList.get(this.buttonList.size()-1).displayString) + 5;
         	}   	
-    		this.buttonList.add(new GuiButton(backButtonID + buttonList.size(), (currentKBLength) + offset, getRowY(rowNum), getButtonWidth(buttonText), getButtonHeight(), buttonText));
-    		currentKeyBinds.add(buttonList.get(this.buttonList.size()-1));
-    		rowCount.put(rowNum, rowCount.get(rowNum) + 1);
+        	GuiButton b = new GuiButton(backButtonID + buttonList.size(), (currentKBLength) + offset, getRowY(rowNum), getButtonWidth(buttonText), getButtonHeight(), buttonText);
+        	currentKeyBinds.add(b);
+        	for (KeyBinding k : keyBindMap.lookupAll(org.lwjgl.input.Keyboard.getKeyIndex(getKeyCode(buttonText))))
+        	{
+        		if (k.getKeyModifier() == currentKeyModifier)
+        		{
+                	this.buttonList.add(b);   		
+            		rowCount.put(rowNum, rowCount.get(rowNum) + 1);
+        		}
+        	}
     	}
     	catch (Exception e)
     	{

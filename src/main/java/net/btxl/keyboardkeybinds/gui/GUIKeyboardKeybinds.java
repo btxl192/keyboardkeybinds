@@ -57,7 +57,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
 	private static GuiButton lastButton = null;
 	private GuiTextField searchBar;
 	private final Integer buttonSpacing = getButtonHeight() + 35;
-	private final float heightOffsetMult = 0.1f;
+	private final float heightOffsetMult = 0.025f;
 	public static KeyModifier currentKeyModifier = KeyModifier.NONE;
 	private Map<GuiButton, KeyModifier> modifierButtons = new HashMap<GuiButton, KeyModifier>();
 	
@@ -68,12 +68,12 @@ public class GUIKeyboardKeybinds extends GuiScreen
 	
 	private float getHeightMult()
 	{
-		return (float)this.height / 900f; 
+		return (float)this.height / 550f; 
 	}
 	
 	private float getWidthMult()
 	{
-		return (float)this.width / 600f;
+		return (float)this.width / 500f;
 	}
 	
 	private Integer getButtonHeight()

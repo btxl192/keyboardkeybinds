@@ -19,7 +19,7 @@ public class GUIControlButton extends GuiButton
 		super(buttonId, x, y, widthIn, heightIn, buttonText);
 		key = Key;
 		keyIndex = org.lwjgl.input.Keyboard.getKeyIndex(GUIKeyboardKeybinds.getKeyCode(key));
-		checkColour();
+		checkText();
 	}
 
 	public String getKey()
@@ -32,14 +32,10 @@ public class GUIControlButton extends GuiButton
 		return keyIndex;
 	}
 	
-	public void checkColour()
+	public void checkText()
 	{		
 		List<KeyBinding> kb = keyBindMap.lookupAll(keyIndex);
 		
-		if (kb.size() == 0)
-		{
-			//displayString = "§a" + displayString;			
-		}	
 		if (kb.size() == 1 && !displayString.contains("("))
 		{
 			displayString = "(" + displayString + ")";
@@ -56,7 +52,6 @@ public class GUIControlButton extends GuiButton
 			}	
 			if (!modMatches)
 			{
-				//displayString = "§6" + displayString;	
 				if (!displayString.contains("?"))
 				{
 					displayString = "?" + displayString;
@@ -71,7 +66,6 @@ public class GUIControlButton extends GuiButton
 			{
 				if (k.getKeyModifier() == GUIKeyboardKeybinds.currentKeyModifier)
 				{
-					//displayString = "§c" + displayString;
 					if (!displayString.contains("*"))
 					{
 						displayString = "*" + displayString + "*";

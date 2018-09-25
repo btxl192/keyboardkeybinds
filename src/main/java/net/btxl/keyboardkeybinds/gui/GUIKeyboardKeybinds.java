@@ -356,6 +356,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
     		{   				
     			showKeyBinds(button);       			
     		} 
+    		drawKeyboard();
     	} 
     	if (modifierButtons.keySet().contains(button))
     	{

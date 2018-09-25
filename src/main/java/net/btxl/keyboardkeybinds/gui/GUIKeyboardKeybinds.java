@@ -55,7 +55,6 @@ public class GUIKeyboardKeybinds extends GuiScreen
 	private Integer otherKBLength = 0;
 	private static Integer lastKeyCode = -1;
 	private static GuiButton lastButton = null;
-	private static String lastDisplayString = "";
 	private GuiTextField searchBar;
 	private final Integer buttonSpacing = getButtonHeight() + 35;
 	private final float heightOffsetMult = 0.1f;
@@ -140,7 +139,6 @@ public class GUIKeyboardKeybinds extends GuiScreen
         		else if (b.id < 392)
         		{
             		String buttonKey = ((GUIControlButton)b).getKey();
-            		((GUIControlButton)b).checkColour();
             		List<String> text = new ArrayList<String>();
             		text.add(buttonKey + " bound to:");
             		String key = getKeyCode(buttonKey);
@@ -289,7 +287,6 @@ public class GUIKeyboardKeybinds extends GuiScreen
 			lastButton.enabled = true;
 		}   
 		lastButton = button;	
-		lastDisplayString = new String(lastButton.displayString);
 		currentKeyBinds.addAll(otherKeyBinds);
 		for (GuiButton b : currentKeyBinds)
 		{
@@ -319,7 +316,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
 				}
 				if (k.getKeyCode() != 0)
 				{
-					buttonList.get(this.buttonList.size()-1).displayString = "§c" + buttonList.get(this.buttonList.size()-1).displayString;
+					buttonList.get(this.buttonList.size()-1).displayString = "Â§c" + buttonList.get(this.buttonList.size()-1).displayString;
 				}
 			}
 		
@@ -352,6 +349,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
     	{
     		currentKeyModifier = modifierButtons.get(button);
     		button.enabled = false;
+    		lastButton = null;
     		drawKeyboard();
     	}
     }
@@ -421,7 +419,7 @@ public class GUIKeyboardKeybinds extends GuiScreen
     		this.buttonList.add(new GUIControlButton(backButtonID + buttonList.size(), rowLength.get(rowNum) + offset + 2 * rowCount.get(rowNum), getRowY(rowNum), getButtonWidth(buttonText), getButtonHeight(), buttonText, key));
     		if (lastButton != null)
     		{			
-    			if (buttonText.equals(lastDisplayString))
+    			if (key.equals(((GUIControlButton)lastButton).getKey()))
     			{
     				getLastButtonInList().enabled = false;
     			}
@@ -442,9 +440,8 @@ public class GUIKeyboardKeybinds extends GuiScreen
     	{
     		this.buttonList.add(new GUIControlButton(backButtonID + buttonList.size(), x, getRowY(rowNum), getButtonWidth(buttonText), getButtonHeight(), buttonText, key));
     		if (lastButton != null)
-    		{
-    			
-    			if (buttonText.equals(lastDisplayString))
+    		{   			
+    			if (key.equals(((GUIControlButton)lastButton).getKey()))
     			{
     				getLastButtonInList().enabled = false;
     			}

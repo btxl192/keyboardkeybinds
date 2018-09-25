@@ -1,0 +1,16 @@
+[
+{
+  "modid": "keyboardkerbinds",
+  "name": "BTXL's Keyboard Keybinds",
+  "description": "New controls menu showing keybinds in a keyboard layout",
+  "version": "1.0",
+  "mcversion": "1.12.2",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["btxl"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

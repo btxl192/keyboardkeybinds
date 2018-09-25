@@ -73,6 +73,17 @@ public class GUIControlButton extends GuiButton
 				}
 			}	
 		}
-		this.width = GUIKeyboardKeybinds.getButtonWidth(displayString);
+		
+		this.width = getButtonWidth();
 	}
+	
+	private float getWidthMult()
+	{
+		return (float)this.width / 600f;
+	}
+	
+    public Integer getButtonWidth(String s)
+    {
+    	return (int) ((20 + 5 * (s.length() - 1)) * getWidthMult());
+    }
 }
